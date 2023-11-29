@@ -2,5 +2,9 @@ from django.apps import AppConfig
 
 
 class MyappConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'myapp'
+    name = "myapp"
+
+    def ready(self):
+        from forecastUpdater import updater
+
+        updater.start()

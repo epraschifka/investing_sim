@@ -1,0 +1,173 @@
+* {
+    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    padding: 20px;
+}
+
+#portfolio {
+    height:400px;
+    border-style:solid;
+    margin-top:10px;
+}
+
+#search-div {
+    height:100px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    padding: 10px;
+}
+
+#searchbar {
+    height:50px;
+    width:700px;
+    border-radius:250px;
+    padding-left:30px;
+    padding-bottom:25px;
+    padding-top:25px;
+    font-size:25px;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#results {
+    height:500px;
+    display:grid;
+    grid-template-columns: repeat(4,4fr);
+    column-gap:10px;
+    row-gap: 10px;
+    height: max-content;
+}
+
+.coinbox {
+    border-style: solid;
+    height: 300px;
+    border-style: solid;
+    cursor: pointer;
+    font-size: 40px;
+    animation-name: appear;
+    animation-duration: 2s;
+    box-shadow: 1px 1px 1px 1px;
+    padding: 10px;
+    position: relative; /* Ensure the position is set to relative or absolute */
+}
+
+.coinbox:hover {
+    box-shadow: 0.15px 0.15px 0.15px 0.15px;
+    opacity: 0.8;
+}
+
+.coin_symbol, .coin_name, .price_change {
+    position: relative;
+    z-index: 2; /* Ensure text is above the background image */
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover; /* Adjust as needed */
+    z-index: 1; /* Behind the text */
+  }
+
+@keyframes appear {
+    from {opacity: 0%;}
+    to {opacity:100%;}
+}
+
+#money {
+    font-size:80px;
+    margin-right:0px;
+    padding-right: 0px;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#currency, .you-own {
+    font-size:30px;
+    margin-left:0px;
+    padding-left:0px;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.you-own {
+    margin-top:10px;
+}
+
+.currency {
+    font-size: 15px;
+}
+
+nav {
+    margin-bottom: 10px;
+}
+
+.coinpage {
+    width:100%;
+    height:600px;
+    background-color:whitesmoke;
+    display:flex;
+}
+
+.order, .coin-info {
+    border-right-style:solid;
+    border-right-color:white;
+    border-right-width: 10px;
+}
+
+.order {
+    flex: 1;
+}
+
+.coin-info {
+    flex: 1.5;
+}
+
+.plot {
+    flex: 3;
+}
+
+.coinpage-child {
+    padding:10px;
+}
+
+.buy, .sell {    
+    flex:1;
+    height:100%;
+    width:50%;
+    text-align:center;
+    font-size:30px;
+}
+
+.sell {
+    opacity:0.5;
+}
+
+.buy {
+    text-decoration:underline;
+}
+
+.buysell-button {
+    width:150px;
+    height:30px;
+    display:flex;
+    cursor:pointer;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+/* *, #portfolio, #search-div, #results {
+    border-style:solid;
+} */

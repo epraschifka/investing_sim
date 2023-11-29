@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username','password1','password2']
 
-class StockForm(forms.Form):
-    choices = [('Buy','Buy'),('Sell','Sell')]
-    quantity = forms.IntegerField(max_value=10000,min_value=1)
-    order_type = forms.ChoiceField(widget=forms.RadioSelect,choices=choices,label='')
+class OrderForm(forms.Form):
+    quantity = forms.IntegerField(min_value=1,label="")
+
+
