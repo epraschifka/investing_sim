@@ -1,9 +1,9 @@
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from forecastUpdater import getPricesApi
+from priceUpdater import getPricesApi
 
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(getPricesApi.func, "interval", seconds=30)
+    scheduler.add_job(getPricesApi.func, "interval", minutes=5)
     scheduler.start()

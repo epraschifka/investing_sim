@@ -5,6 +5,5 @@ class MyappConfig(AppConfig):
     name = "myapp"
 
     def ready(self):
-        from forecastUpdater import updater
-
+        from priceUpdater import updater
         updater.start()

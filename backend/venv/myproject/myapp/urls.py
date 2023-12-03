@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -8,5 +8,7 @@ urlpatterns = [
     path("logout/", views.LogoutView, name="logout"),
     path("data/", views.DataView, name="all_data"),
     path("data/<str:pk>", views.DataView, name="data"),
-    path("coin/<str:pk>", views.CoinView, name="coin")
+    path("coin/<str:pk>", views.CoinView, name="coin"),
+    path("",views.BaseView, name="base"),
+    re_path(r'^.*$', views.handler404, name="404"),
 ]

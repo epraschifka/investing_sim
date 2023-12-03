@@ -9,8 +9,35 @@ body {
 
 #portfolio {
     height:400px;
+    width:100%;
+    display:flex;
+    box-shadow:0px 100px 100px 0.15px;
+    background-color:white;
+    justify-content:space-evenly;
+    z-index:-50;
+}
+
+.piechart-div {
+    padding:20px;
+    margin-left:30px;
+    align-items:center;
+}
+
+.line-label {
+    display:block;
+    z-index:100;
+    width:100%;
+    height:20px;
+    border-color:red;
+}
+
+.linechart-div {
+    width:500px; 
+    height:100%;
+}
+
+.linechart-div.user-select-none svg-container {
     border-style:solid;
-    margin-top:10px;
 }
 
 #search-div {
@@ -22,9 +49,9 @@ body {
 }
 
 #searchbar {
+    border-radius:10px;
     height:50px;
     width:700px;
-    border-radius:250px;
     padding-left:30px;
     padding-bottom:25px;
     padding-top:25px;
@@ -37,15 +64,13 @@ body {
     height:500px;
     display:grid;
     grid-template-columns: repeat(4,4fr);
-    column-gap:10px;
-    row-gap: 10px;
+    column-gap:20px;
+    row-gap: 20px;
     height: max-content;
 }
 
 .coinbox {
-    border-style: solid;
     height: 300px;
-    border-style: solid;
     cursor: pointer;
     font-size: 40px;
     animation-name: appear;
@@ -53,16 +78,13 @@ body {
     box-shadow: 1px 1px 1px 1px;
     padding: 10px;
     position: relative; /* Ensure the position is set to relative or absolute */
-}
-
-.coinbox:hover {
-    box-shadow: 0.15px 0.15px 0.15px 0.15px;
-    opacity: 0.8;
+    background-color:white;
 }
 
 .coin_symbol, .coin_name, .price_change {
     position: relative;
-    z-index: 2; /* Ensure text is above the background image */
+    z-index: 2;
+    pointer-events: none;
 }
 
 .background-image {
@@ -71,21 +93,46 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover; /* Adjust as needed */
-    z-index: 1; /* Behind the text */
-  }
-
-@keyframes appear {
-    from {opacity: 0%;}
-    to {opacity:100%;}
+    background-size: cover;
+    opacity: 0.3;
 }
 
-#money {
-    font-size:80px;
-    margin-right:0px;
-    padding-right: 0px;
+.background-image:hover {
+    opacity: 1;
+    transition: opacity 0.8s ease;
+}
+
+.coinbox:hover {
+    font-weight:800;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%;
+    }
+}
+
+.money-div {
+    padding-left:30px;
+    padding-top:20px;
+}
+
+
+.money {
     font-family: 'Inter', sans-serif;
     font-family: 'Open Sans', sans-serif;
+}
+
+.portfolio {
+    font-size:80px;
+}
+
+.cash, .crypto {
+    font-size: 40px;
 }
 
 #currency, .you-own {
@@ -104,15 +151,12 @@ body {
     font-size: 15px;
 }
 
-nav {
-    margin-bottom: 10px;
-}
-
 .coinpage {
     width:100%;
     height:600px;
-    background-color:whitesmoke;
+    background-color:white;
     display:flex;
+    padding:20px;
 }
 
 .order, .coin-info {
@@ -141,16 +185,7 @@ nav {
     flex:1;
     height:100%;
     width:50%;
-    text-align:center;
     font-size:30px;
-}
-
-.sell {
-    opacity:0.5;
-}
-
-.buy {
-    text-decoration:underline;
 }
 
 .buysell-button {
@@ -168,6 +203,69 @@ nav {
     color: red;
 }
 
-/* *, #portfolio, #search-div, #results {
-    border-style:solid;
-} */
+.login-body, .register-body {
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    background-image: url("https://images.unsplash.com/photo-1457365050282-c53d772ef8b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-repeat: no-repeat;
+    position:relative;
+    background-size:cover;
+}
+
+.dashboard-body, .coin-body {
+    position: relative;
+    z-index:-1;
+    background-image: url("https://images.unsplash.com/photo-1457365050282-c53d772ef8b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size:cover;
+    background-repeat:no-repeat;
+}
+
+.user-div {
+    box-shadow: 0.3px 0.3px 8px 1px; 
+    padding:60px;
+    position:relative;
+    z-index: 1;
+    background-color:white;
+    width:40%;
+    margin-top:50px;
+}
+
+.register-div {
+    padding-bottom: 20px;
+}
+
+nav {
+    justify-content: space-between;
+    z-index:100;
+    width:100%;
+    background-color:white;
+    top:0;
+}
+
+.left-links, .right-links {
+    display:flex;
+    align-items:center;
+}
+
+.right-links {
+    display:flex;
+    align-items:center;
+}
+
+.navbar-link {
+    margin-left:20px;
+    margin-right:20px;
+    font-weight:1000;
+    color:black;
+    text-align:middle;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+body {
+    padding :0px;
+}
+
