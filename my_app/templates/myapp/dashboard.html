@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <script src="https://kit.fontawesome.com/2226da885e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="{% static 'myapp/dashboard.css' %}">
+</head>
+<body class="dashboard-body">
+    {% for message in messages %}
+    <div class="alert alert-success message" role="alert" style="margin-bottom:0px;">
+    {{ message }}
+    </div>
+    {% endfor %}
+    <nav class="navbar">
+        <div class="left-links">
+            <a href="{% url 'dashboard' %}" class="navbar-link crypto100-link" style="font-size:25px;">Crypto100</a>
+            <a href="https://www.coingecko.com/" class="navbar-link dashboard-link" >Powered by CoinGecko</a>
+            <a href="{% url 'dashboard' %}" class="navbar-link dashboard-link" >Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="navbar-link about-link">About</a>
+        </div>
+        <div class="right-links">
+            <a class="navbar-link">Currently logged in as {{ user }}</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="submit" value="Logout" 
+                       class="btn btn-primary">
+            </form>
+        </div>
+    </nav>
+    <div id="portfolio">
+        <div class="money-div border-check">
+            <label style="display:inline-block;">Portfolio</label>
+            <h1 class="money portfolio">{{ user.portfolio_value }} <span id="currency">AUD</span></h1>
+            <label style="display:inline-block;">Cash</label>
+            <h2 class="money cash"> {{ user.money }} <span id="currency">AUD</span></h1>
+            <label style="display:inline-block;">Crypto</label>
+            <h2 class="money crypto"> {{ crypto_value }} <span id="currency">AUD</span></h1>
+        </div>
+        <div class="piechart-div border-check">
+            <label style="display:inline-block;">Portfolio distribution</label>
+            <div class="no-data-div"></div>
+            <canvas id="myPieChart"></canvas>
+            <script>
+                var ctx = document.getElementById('myPieChart').getContext('2d');
+                var data = {
+                    labels: [],
+                    datasets: [{
+                    data: [],
+                    backgroundColor: [],
+                    hoverBackgroundColor: []
+                    }]
+                };
+
+                let pie_color = "";
+
+                var unparsed_pie = '{{ piechart_data | escapejs }}'
+                var parsed_pie = JSON.parse(unparsed_pie);
+                let coin_label = "";
+                let coin_data = "";
+
+                let noDataDiv = document.querySelector(".no-data-div");
+                let piechart = document.querySelector("#myPieChart");
+
+                if (parsed_pie.data.length === 0)
+                {
+                    
+                    noDataDiv.innerText = "Your portfolio is empty.";
+                    noDataDiv.style.width = 100
+                    piechart.style = "display:none;"
+
+                }
+
+                for (let p of parsed_pie.data) {
+                    coin_label = `${p.coin_name} (${p.coin_quantity} owned) profit/loss: ${(p.coin_revenue_percent > 0) ? ('+' + p.coin_revenue_percent) : p.coin_revenue_percent} %`;
+                    coin_data = `${ p.coin_value }`;
+                    data.labels.push(coin_label)
+                    data.datasets[0].data.push(coin_data)
+
+                    let rev = p.coin_revenue_percent;
+                    console.log("rev=" + rev)
+                    let pie_color = "";
+
+                    if (rev < 0)
+                    {
+                        pie_color = "crimson";
+                    }
+
+                    if (rev === 0)
+                    {
+                        pie_color = "lightgray";
+                    }
+
+                    if (rev > 0)
+                    {
+                        pie_color = "green";
+                    }
+
+                    data.datasets[0].backgroundColor.push(pie_color)
+                    data.datasets[0].hoverBackgroundColor.push(pie_color)
+                }
+
+                console.log(data.datasets[0].backgroundColor)
+                console.log(data.datasets[0].hoverBackgroundColor)
+
+                var myPieChart = new Chart(ctx, {
+                    title: 'Hello',
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                        }
+                    }
+                    
+                });
+            </script>
+        </div>
+        <div class = "border-check" style="overflow:hidden;padding:20px;">
+            <label class="line-label">Portfolio value over time</label>
+            <div class='linechart-div' id="linechart-div">
+                <script>
+                    var unparsed_line = '{{ user.portfolio_graph | escapejs }}'
+                    var parsed_line = JSON.parse(unparsed_line);
+    
+                    var data = [
+                        {
+                            x: parsed_line['date'],
+                            y: parsed_line['value'],
+                            type: 'scatter'
+                        }
+                    ];
+    
+                    Plotly.newPlot('linechart-div', data);
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div id="search-div">
+        <input type="text" id="searchbar" placeholder="Search for coins (e.g. 'btc', 'Litecoin', ...)">
+    </div>
+    <div id="results">
+    </div>
+    <script>
+        let data_array = [];
+        results = document.querySelector("#results") 
+        searchbar = document.querySelector("#searchbar")
+        let start = 0;
+        let end = 0;
+        let div;
+
+        load();
+
+
+        // everytime we add or remove a character
+        // to the searchbar, fetch all the words that contain the 
+        // current query
+        searchbar.addEventListener("input", load);
+
+        function load() {
+            query = searchbar.value;
+            fetch('http://127.0.0.1:8000/data/' + query)
+            .then(response => response.json())
+            .then(data => {
+                data_array = data['data'];
+                results.innerHTML = "";
+                start = 0;
+                end = Math.min(20,data_array.length)
+                printResults()
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function printResults()
+        {
+            if (start == 0 && end == 0)
+            {
+                results.innerText = "No results found."
+                results.style = "display:block; text-align:center; font-size:30px; color:white;"
+            }
+            else 
+            {
+                results.style="display:grid";
+                for (let i = start; i < end; i++) {
+                    div = document.createElement('div');
+                    let symbol = data_array[i].symbol;
+                    let name = data_array[i].name;
+                    let image_url = data_array[i].image_url
+                    let change_24h = data_array[i].change_24h
+                    let percent_change_24h = data_array[i].percent_change_24h
+                    div.className = "coinbox";
+                    div.innerHTML = `<div class=coin_symbol>
+                                        ${symbol}
+                                    </div>
+                                    <div class=coin_name>
+                                        ${name}
+                                    </div>
+                                    <div class=price_change>
+                                        ${change_24h} (${percent_change_24h}%)
+                                    </div>
+                                    <div class=background-image>
+                                    </div>
+                                    `
+
+                    background_image = div.querySelector('.background-image');
+
+                    background_image.style = `
+                                 background-image: url(${image_url});
+                                 background-repeat: no-repeat;
+                                 transition: opacity 0.8s ease;
+                                 `;
+
+                    div.onclick = (function (currentSymbol) {
+                        return function () {
+                            window.location.href = "http://127.0.0.1:8000/coin/" + currentSymbol;
+                        };
+                    })(symbol);
+
+                    priceChange_div = div.querySelector(".price_change");
+                    priceChange_percent = priceChange_div.dataset.change;
+                    if (percent_change_24h > 0)
+                    {
+                         // priceChange_div.style.color = `rgb(0,${percent_change_24h*100},0)`
+                         priceChange_div.style = "color:green;"
+                    }
+                    if (percent_change_24h < 0)
+                    {
+                        priceChange_div.style = "color:red;"
+                    }
+
+
+                    results.appendChild(div);
+                }
+
+
+                start = Math.min(start+20,data_array.length);
+                end = Math.min(end+20,data_array.length);
+            }
+        }
+
+        window.onscroll = () => {
+            if (window.innerHeight + window.scrollY + 20 >= document.documentElement.scrollHeight)
+            {
+                printResults();
+            }
+        }
+
+        $(document).ready(function() {
+        // Show alert with sliding animation
+        $(".message").hide();
+
+        $(".message").slideDown();
+
+        // Hide alert with sliding animation after a delay (e.g., 3000 milliseconds)
+        setTimeout(function() {
+            $(".message").slideUp();
+        }, 3000);
+        });
+    </script>
+</body>
+</html>
