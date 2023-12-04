@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-0ob95*%=pvi0%@&l)%yg4ir#wxra=nt+(^x5_qr8g8kk01$n6h"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://crypto500-cdf2ab56089c.herokuapp.com"]
 
 
 # Application definition
@@ -138,8 +138,4 @@ AUTH_USER_MODEL = "my_app.CustomUser"
 
 CSRF_TRUSTED_ORIGINS = ["https://crypto500-cdf2ab56089c.herokuapp.com"]
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    "https://crypto500-cdf2ab56089c.herokuapp.com",
-    "https://crypto500-cdf2ab56089c.herokuapp.com/",
-]
+CORS_ORIGIN_ALLOW_ALL = True
