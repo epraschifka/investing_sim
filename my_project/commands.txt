@@ -1,0 +1,2 @@
+docker build --tag crypto500-image .
+docker run --publish 8000:8000 crypto500-image 
