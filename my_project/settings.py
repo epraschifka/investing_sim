@@ -139,5 +139,5 @@ AUTH_USER_MODEL = "my_app.CustomUser"
 CSRF_TRUSTED_ORIGINS = ["https://crypto500-cdf2ab56089c.herokuapp.com"]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://crypto500-cdf2ab56089c.herokuapp.com",
+    "https://crypto500-cdf2ab56089c.herokuapp.com/",
 ]
