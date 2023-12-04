@@ -171,7 +171,7 @@
 
         function load() {
             query = searchbar.value;
-            fetch('http://127.0.0.1:8000/data/' + query)
+            fetch('https://crypto500-cdf2ab56089c.herokuapp.com/data/' + query)
             .then(response => response.json())
             .then(data => {
                 data_array = data['data'];
@@ -224,7 +224,7 @@
 
                     div.onclick = (function (currentSymbol) {
                         return function () {
-                            window.location.href = "http://127.0.0.1:8000/coin/" + currentSymbol;
+                            window.location.href = "https://crypto500-cdf2ab56089c.herokuapp.com/coin/" + currentSymbol;
                         };
                     })(symbol);
 
