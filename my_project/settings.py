@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "my_app",
     "crispy_forms",
     "crispy_bootstrap4",
+    "corsheaders",
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "my_project.urls"
@@ -135,3 +137,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "my_app.CustomUser"
 
 CSRF_TRUSTED_ORIGINS = ["https://crypto500-cdf2ab56089c.herokuapp.com"]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://crypto500-cdf2ab56089c.herokuapp.com",
+    # Add more origins as needed
+]
