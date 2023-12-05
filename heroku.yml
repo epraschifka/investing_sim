@@ -6,4 +6,4 @@ run:
   clock:
     command:
       - python clock.py
-    image: python:3.8
+    image: "crypto500"
