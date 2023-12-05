@@ -87,7 +87,6 @@
                     data.datasets[0].data.push(coin_data)
 
                     let rev = p.coin_revenue_percent;
-                    console.log("rev=" + rev)
                     let pie_color = "";
 
                     if (rev < 0)
@@ -108,9 +107,6 @@
                     data.datasets[0].backgroundColor.push(pie_color)
                     data.datasets[0].hoverBackgroundColor.push(pie_color)
                 }
-
-                console.log(data.datasets[0].backgroundColor)
-                console.log(data.datasets[0].hoverBackgroundColor)
 
                 var myPieChart = new Chart(ctx, {
                     title: 'Hello',
