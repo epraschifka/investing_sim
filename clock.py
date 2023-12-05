@@ -3,7 +3,7 @@ from priceUpdater.getPricesApi import func
 
 sched = BackgroundScheduler()
 
-@sched.scheduled_job('interval', minutes=5)
+@sched.scheduled_job('interval', seconds=30)
 def timed_job():
     func()
 
