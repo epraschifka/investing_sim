@@ -1,4 +1,3 @@
-# getPricesApi.py
 import sys
 sys.path.append("..")
 from my_app.models import Holding, Coin, CustomUser
