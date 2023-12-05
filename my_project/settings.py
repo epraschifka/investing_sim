@@ -96,8 +96,11 @@ WSGI_APPLICATION = "my_project.wsgi.application"
 } """
 
 DATABASES = {
-        "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
-    }
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        engine="django.db.backends.postgresql",
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
