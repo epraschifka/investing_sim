@@ -96,10 +96,14 @@ WSGI_APPLICATION = "my_project.wsgi.application"
 } """
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        engine="django.db.backends.postgresql",
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['POSTGRES_DB'],
+        'USER': os.environ['POSTGRES_USER'],
+        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+        'HOST': 'db',
+        'POST': '5432',
+    }
 }
 
 # Password validation
